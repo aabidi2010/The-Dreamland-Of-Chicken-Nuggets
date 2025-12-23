@@ -852,37 +852,6 @@
             100% { transform: translate(0, 0) scale(1.2) rotate(0deg); }
         }
 
-        .freddy-jumpscare-img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            filter: brightness(1.3) contrast(1.5) saturate(1.2);
-            animation: imageGlitch 0.08s infinite;
-        }
-
-        @keyframes imageGlitch {
-            0%, 100% {
-                filter: brightness(1.3) contrast(1.5) saturate(1.2);
-                transform: translate(0, 0);
-            }
-            20% {
-                filter: brightness(2) contrast(2) saturate(0.5) hue-rotate(180deg);
-                transform: translate(-10px, 10px);
-            }
-            40% {
-                filter: brightness(0.5) contrast(3) saturate(2);
-                transform: translate(10px, -10px);
-            }
-            60% {
-                filter: brightness(1.8) contrast(1.8) saturate(0.8) hue-rotate(-180deg);
-                transform: translate(-8px, -8px);
-            }
-            80% {
-                filter: brightness(0.8) contrast(2.5) saturate(1.5);
-                transform: translate(8px, 8px);
-            }
-        }
-
         .freddy-face {
             width: 100%;
             height: 100%;
@@ -890,18 +859,66 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            font-size: 500px;
+            filter: drop-shadow(0 0 50px #ff0000) drop-shadow(0 0 100px #ff0000);
+        }
+
+        .freddy-face::before {
+            content: '🐻';
+            animation: bearGlitch 0.1s infinite;
+        }
+
+        @keyframes bearGlitch {
+            0%, 100% {
+                color: #8b4513;
+                filter: brightness(0.3) contrast(3);
+            }
+            25% {
+                color: #ff0000;
+                filter: brightness(2) contrast(2);
+            }
+            50% {
+                color: #000;
+                filter: brightness(0.1) contrast(5);
+            }
+            75% {
+                color: #8b4513;
+                filter: brightness(1.5) contrast(2);
+            }
         }
 
         .freddy-eyes {
-            display: none;
+            position: absolute;
+            width: 120px;
+            height: 120px;
+            background: radial-gradient(circle, #ff0000 0%, #ff0000 30%, #000 70%);
+            border-radius: 50%;
+            box-shadow:
+                0 0 60px #ff0000,
+                0 0 120px #ff0000,
+                inset 0 0 30px #000;
+            animation: eyePulse 0.2s infinite;
+        }
+
+        @keyframes eyePulse {
+            0%, 100% {
+                box-shadow: 0 0 60px #ff0000, 0 0 120px #ff0000, inset 0 0 30px #000;
+                transform: scale(1);
+            }
+            50% {
+                box-shadow: 0 0 100px #ff0000, 0 0 200px #ff0000, 0 0 300px #ff0000, inset 0 0 30px #000;
+                transform: scale(1.2);
+            }
         }
 
         .freddy-eyes.left {
-            display: none;
+            top: 30%;
+            left: 25%;
         }
 
         .freddy-eyes.right {
-            display: none;
+            top: 30%;
+            right: 25%;
         }
 
         /* FNAF Congratulations Screen */
@@ -1030,11 +1047,12 @@
         <source src="https://www.myinstants.com/media/sounds/fnaf-1-freddy-jumpscare.mp3" type="audio/mpeg">
     </audio>
 
-    <!-- FNAF Jump Scare Overlay - REAL FREDDY IMAGE -->
+    <!-- FNAF Jump Scare Overlay - FREDDY BEAR -->
     <div class="jumpscare-overlay" id="jumpscare">
         <div class="jumpscare-image">
             <div class="freddy-face">
-                <img src="https://i.imgur.com/xqZp5Ky.png" alt="FREDDY" class="freddy-jumpscare-img">
+                <div class="freddy-eyes left"></div>
+                <div class="freddy-eyes right"></div>
             </div>
         </div>
     </div>
