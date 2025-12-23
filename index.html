@@ -175,6 +175,154 @@
             }
         }
 
+        /* Nyan Cat */
+        .nyan-cat {
+            position: fixed;
+            width: 120px;
+            height: 80px;
+            z-index: 2;
+            animation: nyanFly 15s linear infinite;
+        }
+
+        @keyframes nyanFly {
+            0% {
+                left: -150px;
+                top: 20%;
+            }
+            25% {
+                left: 50%;
+                top: 30%;
+            }
+            50% {
+                left: 100%;
+                top: 40%;
+            }
+            75% {
+                left: 50%;
+                top: 60%;
+            }
+            100% {
+                left: -150px;
+                top: 20%;
+            }
+        }
+
+        .nyan-rainbow {
+            position: absolute;
+            right: 100%;
+            top: 20%;
+            width: 2000px;
+            height: 60%;
+            background: repeating-linear-gradient(
+                0deg,
+                #ff0080 0px,
+                #ff0080 8px,
+                #ff8c00 8px,
+                #ff8c00 16px,
+                #ffff00 16px,
+                #ffff00 24px,
+                #00ff00 24px,
+                #00ff00 32px,
+                #0080ff 32px,
+                #0080ff 40px,
+                #8000ff 40px,
+                #8000ff 48px
+            );
+            opacity: 0.6;
+        }
+
+        .nyan-body {
+            position: absolute;
+            width: 60px;
+            height: 40px;
+            background: #999;
+            top: 20px;
+            left: 40px;
+            border-radius: 8px;
+            box-shadow:
+                inset 2px 2px 0px rgba(255, 255, 255, 0.4),
+                inset -2px -2px 0px rgba(0, 0, 0, 0.4);
+        }
+
+        .nyan-head {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background: #999;
+            border-radius: 50%;
+            top: 15px;
+            left: 80px;
+            box-shadow:
+                inset 2px 2px 0px rgba(255, 255, 255, 0.4),
+                inset -2px -2px 0px rgba(0, 0, 0, 0.4);
+        }
+
+        .nyan-tail {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: #999;
+            top: 25px;
+            left: 25px;
+            border-radius: 4px;
+            animation: tailWag 0.5s ease-in-out infinite;
+        }
+
+        @keyframes tailWag {
+            0%, 100% {
+                transform: rotate(-10deg);
+            }
+            50% {
+                transform: rotate(10deg);
+            }
+        }
+
+        .nyan-feet {
+            position: absolute;
+            width: 8px;
+            height: 12px;
+            background: #666;
+            border-radius: 4px;
+        }
+
+        .nyan-feet:nth-child(1) {
+            bottom: 15px;
+            left: 45px;
+        }
+
+        .nyan-feet:nth-child(2) {
+            bottom: 15px;
+            left: 65px;
+        }
+
+        .nyan-tart {
+            position: absolute;
+            width: 50px;
+            height: 35px;
+            background: #ffc0cb;
+            top: 22px;
+            left: 45px;
+            border-radius: 6px;
+            border: 3px solid #ff69b4;
+            box-shadow:
+                inset 0 0 10px rgba(255, 255, 255, 0.5);
+        }
+
+        .nyan-sprinkles {
+            position: absolute;
+            width: 3px;
+            height: 8px;
+            background: #ff0080;
+            border-radius: 2px;
+            top: 10px;
+            left: 10px;
+            box-shadow:
+                10px 5px 0px #00ffff,
+                20px 3px 0px #ffff00,
+                15px 12px 0px #00ff00,
+                25px 10px 0px #ff8c00;
+        }
+
         .container {
             max-width: 800px;
             margin: 0 auto;
@@ -196,6 +344,47 @@
         header h1 {
             font-size: 2.5em;
             margin-bottom: 10px;
+            background: linear-gradient(
+                90deg,
+                #ff0080,
+                #ff8c00,
+                #ffff00,
+                #00ff00,
+                #00ffff,
+                #0080ff,
+                #8000ff,
+                #ff0080
+            );
+            background-size: 200% 100%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: rainbowText 2s linear infinite, strobeText 0.3s ease-in-out infinite;
+            text-shadow:
+                0 0 10px rgba(255, 255, 255, 0.8),
+                0 0 20px rgba(255, 0, 255, 0.6),
+                0 0 30px rgba(0, 255, 255, 0.4);
+            filter: drop-shadow(0 0 5px #fff);
+        }
+
+        @keyframes rainbowText {
+            0% {
+                background-position: 0% 50%;
+            }
+            100% {
+                background-position: 200% 50%;
+            }
+        }
+
+        @keyframes strobeText {
+            0%, 100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 0.8;
+                transform: scale(1.05);
+            }
         }
 
         .tagline {
@@ -539,6 +728,20 @@
 <body>
     <!-- Falling chicken nuggets background -->
     <div class="nuggets-background" id="nuggets-background"></div>
+
+    <!-- Nyan Cat flying around -->
+    <div class="nyan-cat">
+        <div class="nyan-rainbow"></div>
+        <div class="nyan-tail"></div>
+        <div class="nyan-tart">
+            <div class="nyan-sprinkles"></div>
+        </div>
+        <div class="nyan-body">
+            <div class="nyan-feet"></div>
+            <div class="nyan-feet"></div>
+        </div>
+        <div class="nyan-head"></div>
+    </div>
 
     <div class="container">
         <header>
