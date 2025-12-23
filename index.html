@@ -796,6 +796,204 @@
                 grid-template-columns: 1fr;
             }
         }
+
+        /* FNAF Jump Scare */
+        .jumpscare-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            z-index: 10000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .jumpscare-overlay.active {
+            display: flex;
+            animation: staticNoise 0.1s infinite;
+        }
+
+        @keyframes staticNoise {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.95; }
+        }
+
+        .jumpscare-image {
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, #1a0000 0%, #000000 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            animation: shake 0.1s infinite;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translate(0, 0) scale(1.1); }
+            25% { transform: translate(-10px, 10px) scale(1.15); }
+            50% { transform: translate(10px, -10px) scale(1.1); }
+            75% { transform: translate(-10px, -5px) scale(1.15); }
+        }
+
+        .freddy-face {
+            width: 600px;
+            height: 600px;
+            position: relative;
+            filter: brightness(0.3) contrast(2);
+            animation: glitch 0.2s infinite;
+        }
+
+        @keyframes glitch {
+            0%, 100% {
+                filter: brightness(0.3) contrast(2);
+                transform: translate(0, 0);
+            }
+            25% {
+                filter: brightness(0.5) contrast(3) hue-rotate(5deg);
+                transform: translate(-5px, 5px);
+            }
+            50% {
+                filter: brightness(0.2) contrast(2.5);
+                transform: translate(5px, -5px);
+            }
+            75% {
+                filter: brightness(0.4) contrast(2) hue-rotate(-5deg);
+                transform: translate(-3px, 3px);
+            }
+        }
+
+        .freddy-eyes {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            background: radial-gradient(circle, #ff0000 0%, #8b0000 50%, #000 100%);
+            border-radius: 50%;
+            box-shadow:
+                0 0 30px #ff0000,
+                inset 0 0 20px #000;
+            animation: eyeGlow 0.3s infinite;
+        }
+
+        @keyframes eyeGlow {
+            0%, 100% {
+                box-shadow: 0 0 30px #ff0000, inset 0 0 20px #000;
+                background: radial-gradient(circle, #ff0000 0%, #8b0000 50%, #000 100%);
+            }
+            50% {
+                box-shadow: 0 0 60px #ff0000, 0 0 80px #ff0000, inset 0 0 20px #000;
+                background: radial-gradient(circle, #ffffff 0%, #ff0000 30%, #8b0000 60%, #000 100%);
+            }
+        }
+
+        .freddy-eyes.left {
+            top: 200px;
+            left: 150px;
+        }
+
+        .freddy-eyes.right {
+            top: 200px;
+            right: 150px;
+        }
+
+        /* FNAF Congratulations Screen */
+        .fnaf-congrats {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            z-index: 9999;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .fnaf-congrats.active {
+            display: flex;
+        }
+
+        .congrats-title {
+            font-size: 4em;
+            color: #ffd700;
+            text-shadow:
+                0 0 10px #ffd700,
+                0 0 20px #ffd700,
+                0 0 30px #ff8c00,
+                3px 3px 0 #8b4513;
+            font-family: 'Impact', 'Arial Black', sans-serif;
+            margin-bottom: 30px;
+            animation: congratsGlow 1s ease-in-out infinite;
+            text-align: center;
+        }
+
+        @keyframes congratsGlow {
+            0%, 100% {
+                text-shadow:
+                    0 0 10px #ffd700,
+                    0 0 20px #ffd700,
+                    0 0 30px #ff8c00,
+                    3px 3px 0 #8b4513;
+            }
+            50% {
+                text-shadow:
+                    0 0 20px #ffd700,
+                    0 0 40px #ffd700,
+                    0 0 60px #ff8c00,
+                    3px 3px 0 #8b4513;
+            }
+        }
+
+        .congrats-message {
+            font-size: 1.5em;
+            color: #fff;
+            text-align: center;
+            margin-bottom: 30px;
+            font-family: 'Courier New', monospace;
+        }
+
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: #ffd700;
+            animation: confettiFall linear infinite;
+        }
+
+        @keyframes confettiFall {
+            0% {
+                top: -10%;
+                transform: rotate(0deg);
+            }
+            100% {
+                top: 110%;
+                transform: rotate(360deg);
+            }
+        }
+
+        .continue-button {
+            padding: 20px 40px;
+            font-size: 1.3em;
+            background: linear-gradient(135deg, #8b4513 0%, #d2691e 100%);
+            color: #ffd700;
+            border: 3px solid #ffd700;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.5);
+            transition: all 0.3s ease;
+            margin-top: 30px;
+        }
+
+        .continue-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 25px rgba(255, 215, 0, 0.7);
+        }
     </style>
 </head>
 <body>
@@ -821,6 +1019,30 @@
         <source src="https://ia801408.us.archive.org/29/items/nyan-cat-original/Nyan%20Cat%20%5Boriginal%5D.mp3" type="audio/mpeg">
     </audio>
     <button id="music-toggle" class="music-button">🔊 Play Nyan Cat Music</button>
+
+    <!-- FNAF Jump Scare Sound -->
+    <audio id="jumpscare-sound">
+        <source src="https://archive.org/download/fnaf-scream/fnaf-scream.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- FNAF Jump Scare Overlay -->
+    <div class="jumpscare-overlay" id="jumpscare">
+        <div class="jumpscare-image">
+            <div class="freddy-face">
+                <div class="freddy-eyes left"></div>
+                <div class="freddy-eyes right"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FNAF Congratulations Screen -->
+    <div class="fnaf-congrats" id="fnaf-congrats">
+        <h1 class="congrats-title">CONGRATULATIONS!</h1>
+        <p class="congrats-message">Your Chicken Nugget Reservation has been secured!</p>
+        <p class="congrats-message">Freddy Fazbear approves this booking! 🐻</p>
+        <button class="continue-button" onclick="closeCongrats()">Continue</button>
+        <div id="confetti-container"></div>
+    </div>
 
     <div class="container">
         <header>
@@ -1148,7 +1370,8 @@
             reservations.push(formData);
             saveReservations(reservations);
 
-            showConfirmation(formData);
+            // Trigger FNAF jump scare!
+            triggerJumpscare(formData);
             bookingForm.reset();
             availabilityMessage.classList.add('hidden');
         }
@@ -1179,6 +1402,64 @@
 
         function closeModal() {
             successModal.classList.add('hidden');
+        }
+
+        // FNAF Jump Scare Functions
+        function triggerJumpscare(reservationData) {
+            const jumpscareOverlay = document.getElementById('jumpscare');
+            const jumpscareSound = document.getElementById('jumpscare-sound');
+            const congratsScreen = document.getElementById('fnaf-congrats');
+
+            // Pause Nyan Cat music if playing
+            const nyanMusic = document.getElementById('nyan-music');
+            nyanMusic.pause();
+
+            // Show jump scare
+            jumpscareOverlay.classList.add('active');
+
+            // Play jump scare sound
+            jumpscareSound.volume = 0.7;
+            jumpscareSound.play().catch(e => console.log('Sound error:', e));
+
+            // After 1.5 seconds, hide jump scare and show congratulations
+            setTimeout(() => {
+                jumpscareOverlay.classList.remove('active');
+                jumpscareSound.pause();
+                jumpscareSound.currentTime = 0;
+
+                // Show congratulations screen
+                congratsScreen.classList.add('active');
+                createConfetti();
+
+                // Resume Nyan Cat music
+                nyanMusic.play().catch(e => console.log('Music error:', e));
+            }, 1500);
+        }
+
+        function closeCongrats() {
+            const congratsScreen = document.getElementById('fnaf-congrats');
+            congratsScreen.classList.remove('active');
+
+            // Clear confetti
+            const confettiContainer = document.getElementById('confetti-container');
+            confettiContainer.innerHTML = '';
+        }
+
+        function createConfetti() {
+            const container = document.getElementById('confetti-container');
+            const colors = ['#ffd700', '#ff8c00', '#ff0080', '#00ffff', '#00ff00', '#8000ff'];
+
+            for (let i = 0; i < 100; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + '%';
+                confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.animationDuration = (2 + Math.random() * 3) + 's';
+                confetti.style.animationDelay = Math.random() * 2 + 's';
+                confetti.style.width = (5 + Math.random() * 10) + 'px';
+                confetti.style.height = (5 + Math.random() * 10) + 'px';
+                container.appendChild(confetti);
+            }
         }
 
         // Load and display reservations
