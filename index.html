@@ -797,7 +797,7 @@
             }
         }
 
-        /* FNAF Jump Scare */
+        /* FNAF Jump Scare - MAXIMUM TERROR */
         .jumpscare-overlay {
             position: fixed;
             top: 0;
@@ -813,90 +813,95 @@
 
         .jumpscare-overlay.active {
             display: flex;
-            animation: staticNoise 0.1s infinite;
+            animation: flashWhite 0.05s infinite;
         }
 
-        @keyframes staticNoise {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.95; }
+        @keyframes flashWhite {
+            0%, 100% {
+                background: #000;
+                filter: brightness(1);
+            }
+            50% {
+                background: #fff;
+                filter: brightness(3);
+            }
         }
 
         .jumpscare-image {
             width: 100%;
             height: 100%;
-            background: radial-gradient(circle, #1a0000 0%, #000000 100%);
+            background: #000;
             display: flex;
             align-items: center;
             justify-content: center;
             position: relative;
-            animation: shake 0.1s infinite;
+            animation: extremeShake 0.05s infinite;
         }
 
-        @keyframes shake {
-            0%, 100% { transform: translate(0, 0) scale(1.1); }
-            25% { transform: translate(-10px, 10px) scale(1.15); }
-            50% { transform: translate(10px, -10px) scale(1.1); }
-            75% { transform: translate(-10px, -5px) scale(1.15); }
+        @keyframes extremeShake {
+            0% { transform: translate(0, 0) scale(1.2) rotate(0deg); }
+            10% { transform: translate(-30px, 20px) scale(1.25) rotate(2deg); }
+            20% { transform: translate(25px, -25px) scale(1.3) rotate(-3deg); }
+            30% { transform: translate(-20px, 30px) scale(1.22) rotate(3deg); }
+            40% { transform: translate(35px, -15px) scale(1.28) rotate(-2deg); }
+            50% { transform: translate(-25px, 25px) scale(1.26) rotate(4deg); }
+            60% { transform: translate(30px, -20px) scale(1.24) rotate(-3deg); }
+            70% { transform: translate(-15px, 35px) scale(1.29) rotate(2deg); }
+            80% { transform: translate(20px, -30px) scale(1.27) rotate(-4deg); }
+            90% { transform: translate(-35px, 15px) scale(1.23) rotate(3deg); }
+            100% { transform: translate(0, 0) scale(1.2) rotate(0deg); }
+        }
+
+        .freddy-jumpscare-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(1.3) contrast(1.5) saturate(1.2);
+            animation: imageGlitch 0.08s infinite;
+        }
+
+        @keyframes imageGlitch {
+            0%, 100% {
+                filter: brightness(1.3) contrast(1.5) saturate(1.2);
+                transform: translate(0, 0);
+            }
+            20% {
+                filter: brightness(2) contrast(2) saturate(0.5) hue-rotate(180deg);
+                transform: translate(-10px, 10px);
+            }
+            40% {
+                filter: brightness(0.5) contrast(3) saturate(2);
+                transform: translate(10px, -10px);
+            }
+            60% {
+                filter: brightness(1.8) contrast(1.8) saturate(0.8) hue-rotate(-180deg);
+                transform: translate(-8px, -8px);
+            }
+            80% {
+                filter: brightness(0.8) contrast(2.5) saturate(1.5);
+                transform: translate(8px, 8px);
+            }
         }
 
         .freddy-face {
-            width: 600px;
-            height: 600px;
+            width: 100%;
+            height: 100%;
             position: relative;
-            filter: brightness(0.3) contrast(2);
-            animation: glitch 0.2s infinite;
-        }
-
-        @keyframes glitch {
-            0%, 100% {
-                filter: brightness(0.3) contrast(2);
-                transform: translate(0, 0);
-            }
-            25% {
-                filter: brightness(0.5) contrast(3) hue-rotate(5deg);
-                transform: translate(-5px, 5px);
-            }
-            50% {
-                filter: brightness(0.2) contrast(2.5);
-                transform: translate(5px, -5px);
-            }
-            75% {
-                filter: brightness(0.4) contrast(2) hue-rotate(-5deg);
-                transform: translate(-3px, 3px);
-            }
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .freddy-eyes {
-            position: absolute;
-            width: 80px;
-            height: 80px;
-            background: radial-gradient(circle, #ff0000 0%, #8b0000 50%, #000 100%);
-            border-radius: 50%;
-            box-shadow:
-                0 0 30px #ff0000,
-                inset 0 0 20px #000;
-            animation: eyeGlow 0.3s infinite;
-        }
-
-        @keyframes eyeGlow {
-            0%, 100% {
-                box-shadow: 0 0 30px #ff0000, inset 0 0 20px #000;
-                background: radial-gradient(circle, #ff0000 0%, #8b0000 50%, #000 100%);
-            }
-            50% {
-                box-shadow: 0 0 60px #ff0000, 0 0 80px #ff0000, inset 0 0 20px #000;
-                background: radial-gradient(circle, #ffffff 0%, #ff0000 30%, #8b0000 60%, #000 100%);
-            }
+            display: none;
         }
 
         .freddy-eyes.left {
-            top: 200px;
-            left: 150px;
+            display: none;
         }
 
         .freddy-eyes.right {
-            top: 200px;
-            right: 150px;
+            display: none;
         }
 
         /* FNAF Congratulations Screen */
@@ -1025,12 +1030,11 @@
         <source src="https://www.myinstants.com/media/sounds/fnaf-1-freddy-jumpscare.mp3" type="audio/mpeg">
     </audio>
 
-    <!-- FNAF Jump Scare Overlay -->
+    <!-- FNAF Jump Scare Overlay - REAL FREDDY IMAGE -->
     <div class="jumpscare-overlay" id="jumpscare">
         <div class="jumpscare-image">
             <div class="freddy-face">
-                <div class="freddy-eyes left"></div>
-                <div class="freddy-eyes right"></div>
+                <img src="https://i.imgur.com/xqZp5Ky.png" alt="FREDDY" class="freddy-jumpscare-img">
             </div>
         </div>
     </div>
@@ -1404,7 +1408,7 @@
             successModal.classList.add('hidden');
         }
 
-        // FNAF Jump Scare Functions
+        // FNAF Jump Scare Functions - MAXIMUM TERROR MODE
         function triggerJumpscare(reservationData) {
             const jumpscareOverlay = document.getElementById('jumpscare');
             const jumpscareSound = document.getElementById('jumpscare-sound');
@@ -1417,12 +1421,30 @@
             // Show jump scare
             jumpscareOverlay.classList.add('active');
 
-            // Play AUTHENTIC Freddy jump scare sound - LOUD like the game!
-            jumpscareSound.volume = 1.0; // Full volume for maximum scare
+            // Play AUTHENTIC Freddy jump scare sound - MAXIMUM VOLUME!!!
+            jumpscareSound.volume = 1.0; // FULL BLAST!!!
             jumpscareSound.currentTime = 0; // Start from beginning
+
+            // Create audio context for even LOUDER sound (if possible)
+            try {
+                const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                const source = audioContext.createMediaElementSource(jumpscareSound);
+                const gainNode = audioContext.createGain();
+                gainNode.gain.value = 2.0; // DOUBLE THE VOLUME!
+                source.connect(gainNode);
+                gainNode.connect(audioContext.destination);
+            } catch (e) {
+                console.log('AudioContext not available, using standard audio');
+            }
+
             jumpscareSound.play().catch(e => console.log('Sound error:', e));
 
-            // After 1.5 seconds, hide jump scare and show congratulations
+            // VIBRATE if supported (mobile devices)
+            if (navigator.vibrate) {
+                navigator.vibrate([100, 50, 100, 50, 100, 50, 100]); // Intense vibration!
+            }
+
+            // After 2 seconds, hide jump scare and show congratulations
             setTimeout(() => {
                 jumpscareOverlay.classList.remove('active');
                 jumpscareSound.pause();
@@ -1434,7 +1456,7 @@
 
                 // Resume Nyan Cat music
                 nyanMusic.play().catch(e => console.log('Music error:', e));
-            }, 1500);
+            }, 2000);
         }
 
         function closeCongrats() {
