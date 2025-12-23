@@ -1047,6 +1047,11 @@
         <source src="https://www.myinstants.com/media/sounds/fnaf-1-freddy-jumpscare.mp3" type="audio/mpeg">
     </audio>
 
+    <!-- FNAF 'YAY' Completion Sound - Night Completion Jingle -->
+    <audio id="yay-sound">
+        <source src="https://www.myinstants.com/media/sounds/fnaf-6-am-chime.mp3" type="audio/mpeg">
+    </audio>
+
     <!-- FNAF Jump Scare Overlay - FREDDY BEAR -->
     <div class="jumpscare-overlay" id="jumpscare">
         <div class="jumpscare-image">
@@ -1471,6 +1476,12 @@
                 // Show congratulations screen
                 congratsScreen.classList.add('active');
                 createConfetti();
+
+                // Play FNAF 'YAY' completion sound!
+                const yaySound = document.getElementById('yay-sound');
+                yaySound.volume = 1.0;
+                yaySound.currentTime = 0;
+                yaySound.play().catch(e => console.log('YAY sound error:', e));
 
                 // Resume Nyan Cat music
                 nyanMusic.play().catch(e => console.log('Music error:', e));
