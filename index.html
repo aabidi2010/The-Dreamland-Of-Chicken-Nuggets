@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Dreamland Of Chicken Nuggets - Reservations</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .tagline {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .tabs {
+            display: flex;
+            background: #f8f9fa;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .tab-button {
+            flex: 1;
+            padding: 15px 20px;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: 600;
+            color: #666;
+            transition: all 0.3s ease;
+        }
+
+        .tab-button:hover {
+            background: #e9ecef;
+        }
+
+        .tab-button.active {
+            background: white;
+            color: #667eea;
+            border-bottom: 3px solid #667eea;
+        }
+
+        .tab-content {
+            display: none;
+            padding: 30px;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        h2 {
+            color: #333;
+            margin-bottom: 25px;
+            font-size: 1.8em;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-weight: 600;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        input[type="date"],
+        input[type="time"],
+        input[type="number"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1em;
+            transition: border-color 0.3s ease;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        textarea {
+            resize: vertical;
+            font-family: inherit;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            width: 100%;
+            padding: 15px;
+            font-size: 1.1em;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-danger {
+            background: #f5576c;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #e04758;
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #5a6268;
+        }
+
+        .search-section {
+            margin-bottom: 20px;
+        }
+
+        #search-input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1em;
+        }
+
+        #reservations-list {
+            min-height: 200px;
+        }
+
+        .reservation-card {
+            background: #f8f9fa;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 15px;
+            transition: transform 0.2s ease;
+        }
+
+        .reservation-card:hover {
+            transform: translateX(5px);
+            border-color: #667eea;
+        }
+
+        .reservation-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .reservation-header h3 {
+            color: #333;
+            font-size: 1.3em;
+        }
+
+        .status-badge {
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 600;
+        }
+
+        .status-confirmed {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-cancelled {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .reservation-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .detail-item {
+            color: #666;
+        }
+
+        .detail-item strong {
+            color: #333;
+        }
+
+        .reservation-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .reservation-actions button {
+            flex: 1;
+        }
+
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            max-width: 500px;
+            text-align: center;
+        }
+
+        .modal-content h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .loading {
+            text-align: center;
+            color: #666;
+            padding: 40px;
+        }
+
+        .error-message,
+        .success-message {
+            padding: 12px 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .error-message {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .success-message {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        #availability-message {
+            margin-bottom: 15px;
+        }
+
+        #confirmation-details {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            text-align: left;
+        }
+
+        #confirmation-details p {
+            margin: 8px 0;
+            color: #333;
+        }
+
+        .stats-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            text-align: center;
+        }
+
+        .stat-item {
+            padding: 10px;
+        }
+
+        .stat-number {
+            font-size: 2em;
+            font-weight: bold;
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+
+        @media (max-width: 768px) {
+            .form-row,
+            .reservation-details {
+                grid-template-columns: 1fr;
+            }
+
+            header h1 {
+                font-size: 2em;
+            }
+
+            .reservation-actions {
+                flex-direction: column;
+            }
+
+            .stats-section {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🍗 The Dreamland Of Chicken Nuggets</h1>
+            <p class="tagline">Reserve Your Nugget Experience</p>
+        </header>
+
+        <div class="tabs">
+            <button class="tab-button active" data-tab="booking">Make a Reservation</button>
+            <button class="tab-button" data-tab="view">View Reservations</button>
+        </div>
+
+        <!-- Booking Form Tab -->
+        <div id="booking-tab" class="tab-content active">
+            <form id="booking-form">
+                <h2>Reserve Your Table</h2>
+
+                <div class="form-group">
+                    <label for="name">Full Name *</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="email">Email *</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phone">Phone Number *</label>
+                        <input type="tel" id="phone" name="phone" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="date">Date *</label>
+                        <input type="date" id="date" name="date" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="time">Time *</label>
+                        <input type="time" id="time" name="time" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="guests">Number of Guests *</label>
+                    <input type="number" id="guests" name="guests" min="1" max="20" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="nuggetPreference">Nugget Preference</label>
+                    <select id="nuggetPreference" name="nuggetPreference">
+                        <option value="classic">Classic Crispy</option>
+                        <option value="spicy">Spicy Supreme</option>
+                        <option value="honey">Honey Glazed</option>
+                        <option value="bbq">BBQ Bliss</option>
+                        <option value="vegan">Vegan Delight</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="specialRequests">Special Requests</label>
+                    <textarea id="specialRequests" name="specialRequests" rows="3"
+                              placeholder="Any dietary restrictions, celebrations, or special requests?"></textarea>
+                </div>
+
+                <div id="availability-message" class="hidden"></div>
+
+                <button type="submit" class="btn btn-primary">Book Reservation</button>
+            </form>
+        </div>
+
+        <!-- View Reservations Tab -->
+        <div id="view-tab" class="tab-content">
+            <h2>Your Reservations</h2>
+
+            <div class="stats-section">
+                <div class="stat-item">
+                    <span class="stat-number" id="total-reservations">0</span>
+                    <span class="stat-label">Total Bookings</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number" id="upcoming-reservations">0</span>
+                    <span class="stat-label">Upcoming</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number" id="total-guests">0</span>
+                    <span class="stat-label">Total Guests</span>
+                </div>
+            </div>
+
+            <div class="search-section">
+                <input type="text" id="search-input" placeholder="Search by name, email, or phone...">
+            </div>
+            <div id="reservations-list">
+                <p class="loading">No reservations yet. Make your first booking!</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div id="success-modal" class="modal hidden">
+        <div class="modal-content">
+            <h2>🎉 Reservation Confirmed!</h2>
+            <div id="confirmation-details"></div>
+            <button class="btn btn-primary" onclick="closeModal()">Close</button>
+        </div>
+    </div>
+
+    <script>
+        // LocalStorage key
+        const STORAGE_KEY = 'chicken_nugget_reservations';
+
+        // DOM Elements
+        const bookingForm = document.getElementById('booking-form');
+        const reservationsList = document.getElementById('reservations-list');
+        const searchInput = document.getElementById('search-input');
+        const successModal = document.getElementById('success-modal');
+        const confirmationDetails = document.getElementById('confirmation-details');
+        const availabilityMessage = document.getElementById('availability-message');
+
+        // State
+        let allReservations = [];
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            initializeTabs();
+            initializeForm();
+            loadReservations();
+            setMinDate();
+        });
+
+        // LocalStorage functions
+        function getReservations() {
+            const stored = localStorage.getItem(STORAGE_KEY);
+            return stored ? JSON.parse(stored) : [];
+        }
+
+        function saveReservations(reservations) {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(reservations));
+        }
+
+        // Tab functionality
+        function initializeTabs() {
+            const tabButtons = document.querySelectorAll('.tab-button');
+            tabButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const tabName = button.dataset.tab;
+                    switchTab(tabName);
+                });
+            });
+        }
+
+        function switchTab(tabName) {
+            // Update buttons
+            document.querySelectorAll('.tab-button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.querySelector(`[data-tab="${tabName}"]`).classList.add('active');
+
+            // Update content
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            document.getElementById(`${tabName}-tab`).classList.add('active');
+
+            // Reload reservations when switching to view tab
+            if (tabName === 'view') {
+                loadReservations();
+            }
+        }
+
+        // Set minimum date to today
+        function setMinDate() {
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('date').min = today;
+        }
+
+        // Form initialization
+        function initializeForm() {
+            bookingForm.addEventListener('submit', handleBookingSubmit);
+
+            // Check availability when date/time changes
+            const dateInput = document.getElementById('date');
+            const timeInput = document.getElementById('time');
+
+            dateInput.addEventListener('change', checkAvailability);
+            timeInput.addEventListener('change', checkAvailability);
+        }
+
+        // Check availability
+        function checkAvailability() {
+            const date = document.getElementById('date').value;
+            const time = document.getElementById('time').value;
+
+            if (!date || !time) return;
+
+            const reservations = getReservations();
+            const existingReservations = reservations.filter(r =>
+                r.date === date && r.time === time && r.status === 'confirmed'
+            );
+
+            const totalGuests = existingReservations.reduce((sum, r) => sum + r.guests, 0);
+            const maxCapacity = 50;
+            const available = totalGuests < maxCapacity;
+            const remainingCapacity = maxCapacity - totalGuests;
+
+            if (available) {
+                showAvailabilityMessage(
+                    `Available! ${remainingCapacity} spots remaining.`,
+                    'success'
+                );
+            } else {
+                showAvailabilityMessage(
+                    'Sorry, this time slot is fully booked. Please choose another time.',
+                    'error'
+                );
+            }
+        }
+
+        function showAvailabilityMessage(message, type) {
+            availabilityMessage.textContent = message;
+            availabilityMessage.className = type === 'success' ? 'success-message' : 'error-message';
+            availabilityMessage.classList.remove('hidden');
+        }
+
+        // Handle booking form submission
+        function handleBookingSubmit(e) {
+            e.preventDefault();
+
+            const formData = {
+                id: Date.now().toString(),
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value,
+                date: document.getElementById('date').value,
+                time: document.getElementById('time').value,
+                guests: parseInt(document.getElementById('guests').value),
+                nuggetPreference: document.getElementById('nuggetPreference').value,
+                specialRequests: document.getElementById('specialRequests').value,
+                status: 'confirmed',
+                createdAt: new Date().toISOString()
+            };
+
+            // Check availability before booking
+            const reservations = getReservations();
+            const existingReservations = reservations.filter(r =>
+                r.date === formData.date && r.time === formData.time && r.status === 'confirmed'
+            );
+            const totalGuests = existingReservations.reduce((sum, r) => sum + r.guests, 0);
+
+            if (totalGuests + formData.guests > 50) {
+                alert('Sorry, not enough capacity for this time slot. Please choose another time.');
+                return;
+            }
+
+            reservations.push(formData);
+            saveReservations(reservations);
+
+            showConfirmation(formData);
+            bookingForm.reset();
+            availabilityMessage.classList.add('hidden');
+        }
+
+        // Show confirmation modal
+        function showConfirmation(reservation) {
+            const formattedDate = new Date(reservation.date + 'T00:00:00').toLocaleDateString('en-US', {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+
+            confirmationDetails.innerHTML = `
+                <p><strong>Name:</strong> ${reservation.name}</p>
+                <p><strong>Date:</strong> ${formattedDate}</p>
+                <p><strong>Time:</strong> ${reservation.time}</p>
+                <p><strong>Guests:</strong> ${reservation.guests}</p>
+                <p><strong>Nugget Preference:</strong> ${formatNuggetPreference(reservation.nuggetPreference)}</p>
+                <p><strong>Confirmation ID:</strong> ${reservation.id}</p>
+                <p style="margin-top: 15px; color: #666;">
+                    We look forward to serving you!
+                </p>
+            `;
+
+            successModal.classList.remove('hidden');
+        }
+
+        function closeModal() {
+            successModal.classList.add('hidden');
+        }
+
+        // Load and display reservations
+        function loadReservations() {
+            allReservations = getReservations();
+            updateStats();
+            displayReservations(allReservations);
+        }
+
+        function updateStats() {
+            const total = allReservations.length;
+            const now = new Date();
+            const upcoming = allReservations.filter(r => {
+                const resDate = new Date(r.date + 'T' + r.time);
+                return resDate >= now && r.status === 'confirmed';
+            }).length;
+            const totalGuests = allReservations
+                .filter(r => r.status === 'confirmed')
+                .reduce((sum, r) => sum + r.guests, 0);
+
+            document.getElementById('total-reservations').textContent = total;
+            document.getElementById('upcoming-reservations').textContent = upcoming;
+            document.getElementById('total-guests').textContent = totalGuests;
+        }
+
+        function displayReservations(reservations) {
+            if (reservations.length === 0) {
+                reservationsList.innerHTML = '<p class="loading">No reservations found</p>';
+                return;
+            }
+
+            // Sort by date and time (newest first)
+            const sorted = [...reservations].sort((a, b) => {
+                const dateA = new Date(a.date + 'T' + a.time);
+                const dateB = new Date(b.date + 'T' + b.time);
+                return dateB - dateA;
+            });
+
+            reservationsList.innerHTML = sorted.map(reservation => createReservationCard(reservation)).join('');
+
+            // Add event listeners to action buttons
+            document.querySelectorAll('.cancel-btn').forEach(btn => {
+                btn.addEventListener('click', () => cancelReservation(btn.dataset.id));
+            });
+        }
+
+        function createReservationCard(reservation) {
+            const formattedDate = new Date(reservation.date + 'T00:00:00').toLocaleDateString('en-US', {
+                weekday: 'short',
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric'
+            });
+
+            const isPast = new Date(reservation.date + 'T' + reservation.time) < new Date();
+            const statusClass = reservation.status === 'confirmed' ? 'status-confirmed' : 'status-cancelled';
+
+            return `
+                <div class="reservation-card">
+                    <div class="reservation-header">
+                        <h3>${reservation.name}</h3>
+                        <span class="status-badge ${statusClass}">${reservation.status}</span>
+                    </div>
+                    <div class="reservation-details">
+                        <div class="detail-item">
+                            <strong>Date:</strong> ${formattedDate}
+                        </div>
+                        <div class="detail-item">
+                            <strong>Time:</strong> ${reservation.time}
+                        </div>
+                        <div class="detail-item">
+                            <strong>Guests:</strong> ${reservation.guests}
+                        </div>
+                        <div class="detail-item">
+                            <strong>Nuggets:</strong> ${formatNuggetPreference(reservation.nuggetPreference)}
+                        </div>
+                        <div class="detail-item">
+                            <strong>Email:</strong> ${reservation.email}
+                        </div>
+                        <div class="detail-item">
+                            <strong>Phone:</strong> ${reservation.phone}
+                        </div>
+                    </div>
+                    ${reservation.specialRequests ? `
+                        <div class="detail-item" style="margin-bottom: 10px;">
+                            <strong>Special Requests:</strong> ${reservation.specialRequests}
+                        </div>
+                    ` : ''}
+                    <div class="detail-item" style="font-size: 0.85em; color: #999;">
+                        <strong>Booking ID:</strong> ${reservation.id}
+                    </div>
+                    ${!isPast && reservation.status === 'confirmed' ? `
+                        <div class="reservation-actions">
+                            <button class="btn btn-danger cancel-btn" data-id="${reservation.id}">
+                                Cancel Reservation
+                            </button>
+                        </div>
+                    ` : ''}
+                </div>
+            `;
+        }
+
+        function formatNuggetPreference(pref) {
+            const preferences = {
+                'classic': 'Classic Crispy',
+                'spicy': 'Spicy Supreme',
+                'honey': 'Honey Glazed',
+                'bbq': 'BBQ Bliss',
+                'vegan': 'Vegan Delight'
+            };
+            return preferences[pref] || pref;
+        }
+
+        // Cancel reservation
+        function cancelReservation(id) {
+            if (!confirm('Are you sure you want to cancel this reservation?')) {
+                return;
+            }
+
+            const reservations = getReservations();
+            const filteredReservations = reservations.filter(r => r.id !== id);
+            saveReservations(filteredReservations);
+
+            alert('Reservation cancelled successfully');
+            loadReservations();
+        }
+
+        // Search functionality
+        searchInput.addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase();
+            const filtered = allReservations.filter(reservation =>
+                reservation.name.toLowerCase().includes(searchTerm) ||
+                reservation.email.toLowerCase().includes(searchTerm) ||
+                reservation.phone.toLowerCase().includes(searchTerm)
+            );
+            displayReservations(filtered);
+        });
+
+        // Close modal when clicking outside
+        successModal.addEventListener('click', (e) => {
+            if (e.target === successModal) {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>
