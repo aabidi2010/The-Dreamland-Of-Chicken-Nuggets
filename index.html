@@ -1020,9 +1020,9 @@
     </audio>
     <button id="music-toggle" class="music-button">🔊 Play Nyan Cat Music</button>
 
-    <!-- FNAF Jump Scare Sound -->
+    <!-- FNAF Jump Scare Sound - Authentic Freddy Scream -->
     <audio id="jumpscare-sound">
-        <source src="https://archive.org/download/fnaf-scream/fnaf-scream.mp3" type="audio/mpeg">
+        <source src="https://www.myinstants.com/media/sounds/fnaf-1-freddy-jumpscare.mp3" type="audio/mpeg">
     </audio>
 
     <!-- FNAF Jump Scare Overlay -->
@@ -1417,8 +1417,9 @@
             // Show jump scare
             jumpscareOverlay.classList.add('active');
 
-            // Play jump scare sound
-            jumpscareSound.volume = 0.7;
+            // Play AUTHENTIC Freddy jump scare sound - LOUD like the game!
+            jumpscareSound.volume = 1.0; // Full volume for maximum scare
+            jumpscareSound.currentTime = 0; // Start from beginning
             jumpscareSound.play().catch(e => console.log('Sound error:', e));
 
             // After 1.5 seconds, hide jump scare and show congratulations
